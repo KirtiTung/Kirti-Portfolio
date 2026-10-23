@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Script | Kirti Bardhan Tung</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            purple: '#A100FF',
+                            black: '#000000',
+                            white: '#FFFFFF',
+                            gray: '#F9F9F9',
+                            darkgray: '#E5E5E5'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            animation: fadeIn 0.6s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        ::selection {
+            background-color: #A100FF;
+            color: #FFFFFF;
+        }
+        
+        /* Accordion transition classes */
+        .accordion-content {
+            transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .accordion-content.expanded {
+            max-height: 800px; /* Large enough to hold the 600px iframe + padding */
+            opacity: 1;
+        }
+        
+        /* Custom scrollbar for iframes if needed */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #A100FF; 
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8000cc; 
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-white text-brand-black font-sans flex flex-col relative selection:bg-brand-purple selection:text-white">
+    
+    <!-- Top decorative bar -->
+    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-brand-purple to-black z-50"></div>
+
+    <!-- Main Content Container -->
+    <main class="w-full max-w-6xl mx-auto px-6 sm:px-12 lg:px-24 py-16 lg:py-24 z-10 flex flex-col flex-grow">
+        
+        <!-- Navigation / Breadcrumbs -->
+        <div class="flex flex-wrap gap-6 mb-12">
+            <a href="../index.html" class="group inline-flex items-center text-sm font-bold uppercase tracking-widest text-gray-500 hover:text-brand-purple transition-colors duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 transform group-hover:-translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                    <path stroke-linecap="square" stroke-linejoin="miter" d="M15 19l-7-7 7-7" />
+                </svg>
+                Back to Home
+            </a>
+            <span class="text-gray-300 font-bold hidden sm:inline-block">|</span>
+            <a href="learnings_section.html" class="group inline-flex items-center text-sm font-bold uppercase tracking-widest text-gray-500 hover:text-brand-purple transition-colors duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 transform group-hover:-translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                    <path stroke-linecap="square" stroke-linejoin="miter" d="M15 19l-7-7 7-7" />
+                </svg>
+                Back to Learnings
+            </a>
+        </div>
+
+        <!-- Header Section -->
+        <div class="mb-16">
+            <h2 class="text-sm sm:text-base font-bold text-gray-500 tracking-[0.2em] uppercase mb-4">
+                Frontend Scripting & UI Logic
+            </h2>
+            <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase leading-none">
+                CLIENT SCRIPT<span class="text-brand-purple ml-2">></span>
+            </h1>
+        </div>
+
+        <!-- Section: Documentation -->
+        <section class="mb-16">
+            <h3 class="text-3xl font-black uppercase tracking-tight mb-6 flex items-center">
+                Documentation & Guides
+                <span class="ml-4 h-px flex-grow bg-brand-darkgray"></span>
+            </h3>
+            <div id="client-container" class="flex flex-col gap-4">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Decorative background element -->
+    <div class="fixed bottom-0 right-0 w-[40vw] h-[40vw] bg-brand-gray rounded-tl-full -z-10 opacity-40 transform translate-x-1/4 translate-y-1/4 pointer-events-none"></div>
+
+    <!-- Application Logic -->
+    <script>
+        // Document Data
+        const clientDocs = [
+            { 
+                title: "CLIENT SCRIPT.docx", 
+                rawUrl: "https://raw.githubusercontent.com/KirtiTung/ServiceNow-Codex/main/CSA%20AND%20CAD/CLIENT%20SCRIPT.docx" 
+            }
+        ];
+
+        /**
+         * Generates the HTML for an accordion item and appends it to the container.
+         */
+        function renderAccordion(containerId, dataArray) {
+            const container = document.getElementById(containerId);
+            
+            dataArray.forEach((item, index) => {
+                // Generate a unique ID for the content div to easily target it
+                const contentId = `${containerId}-content-${index}`;
+                
+                // Create the wrapper
+                const wrapper = document.createElement('div');
+                wrapper.className = "group border border-brand-darkgray bg-white transition-all duration-300 hover:border-brand-purple overflow-hidden";
+                
+                // Active state styling element (the purple left border)
+                const activeIndicator = document.createElement('div');
+                activeIndicator.className = "absolute left-0 top-0 h-full w-1 bg-brand-purple transform scale-y-0 origin-bottom transition-transform duration-300 accordion-active-border";
+
+                // Inner wrapper for relative positioning
+                const innerWrapper = document.createElement('div');
+                innerWrapper.className = "relative";
+                
+                // Header (Clickable Area)
+                const header = document.createElement('button');
+                header.className = "w-full flex items-center justify-between p-6 bg-white focus:outline-none cursor-pointer";
+                
+                // Word Doc Icon
+                const iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500 mr-4 flex-shrink-0 group-hover:text-brand-purple transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2.5 2.5 0 00-2.5-2.5H15M9 11l3 3m0 0l3-3m-3 3V8" />
+                               </svg>`;
+
+                header.innerHTML = `
+                    <div class="flex items-center">
+                        ${iconSvg}
+                        <span class="font-bold text-lg sm:text-xl tracking-tight text-left">${item.title}</span>
+                    </div>
+                    <span class="text-brand-purple font-black text-2xl transform transition-transform duration-300 accordion-icon">></span>
+                `;
+
+                // Content Area (Hidden by default)
+                const content = document.createElement('div');
+                content.id = contentId;
+                content.className = "accordion-content bg-brand-gray";
+                
+                // Container for the iframe to manage padding
+                const iframeContainer = document.createElement('div');
+                iframeContainer.className = "p-6";
+                // Add a placeholder to show it's loading when first clicked
+                iframeContainer.innerHTML = `<div class="text-center text-gray-500 py-10 font-medium animate-pulse">Loading document...</div>`;
+
+                content.appendChild(iframeContainer);
+                
+                // Append everything
+                innerWrapper.appendChild(activeIndicator);
+                innerWrapper.appendChild(header);
+                innerWrapper.appendChild(content);
+                wrapper.appendChild(innerWrapper);
+                container.appendChild(wrapper);
+
+                // Add Click Event Listener
+                let isLoaded = false;
+                
+                header.addEventListener('click', () => {
+                    const isExpanded = content.classList.contains('expanded');
+                    const icon = header.querySelector('.accordion-icon');
+                    const border = innerWrapper.querySelector('.accordion-active-border');
+                    
+                    if (isExpanded) {
+                        // Collapse
+                        content.classList.remove('expanded');
+                        icon.style.transform = "rotate(0deg)";
+                        border.style.transform = "scaleY(0)";
+                        wrapper.classList.remove('border-brand-purple', 'shadow-[0_8px_30px_rgb(0,0,0,0.08)]');
+                        wrapper.classList.add('border-brand-darkgray');
+                    } else {
+                        // Expand
+                        content.classList.add('expanded');
+                        icon.style.transform = "rotate(90deg)";
+                        border.style.transform = "scaleY(1)";
+                        wrapper.classList.add('border-brand-purple', 'shadow-[0_8px_30px_rgb(0,0,0,0.08)]');
+                        wrapper.classList.remove('border-brand-darkgray');
+                        
+                        // Lazy load iframe on first open
+                        if (!isLoaded) {
+                            iframeContainer.innerHTML = ''; // clear loading text
+                            
+                            const embedUrl = "https://view.officeapps.live.com/op/embed.aspx?src=" + encodeURIComponent(item.rawUrl);
+                            
+                            const iframe = document.createElement('iframe');
+                            iframe.src = embedUrl;
+                            iframe.className = "w-full h-[600px] border border-gray-300 rounded bg-white shadow-inner";
+                            iframe.title = item.title;
+                            
+                            iframeContainer.appendChild(iframe);
+                            isLoaded = true;
+                        }
+                    }
+                });
+            });
+        }
+
+        // Initialize the page by rendering the accordions
+        document.addEventListener('DOMContentLoaded', () => {
+            renderAccordion('client-container', clientDocs);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proof of My Work | Kirti Bardhan Tung</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter font for clean, modern corporate typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            purple: '#A100FF',
+                            black: '#000000',
+                            white: '#FFFFFF',
+                            gray: '#F4F4F4'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            /* Smooth fade in */
+            animation: fadeIn 0.8s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Custom text selection color */
+        ::selection {
+            background-color: #A100FF;
+            color: #FFFFFF;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-white text-brand-black font-sans flex flex-col justify-center relative overflow-x-hidden selection:bg-brand-purple selection:text-white">
+    
+    <!-- Subtle top decorative bar -->
+    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-brand-purple to-black"></div>
+
+    <!-- Main Content Container -->
+    <main class="w-full max-w-6xl mx-auto px-6 sm:px-12 lg:px-24 z-10 flex flex-col items-start">
+        
+        <!-- Subheading -->
+        <h2 class="text-sm sm:text-base font-bold text-gray-500 tracking-[0.2em] uppercase mb-4 animate-fade-in">
+            Kirti Bardhan Tung
+        </h2>
+        
+        <!-- Main Heading with signature '>' symbol -->
+        <h1 class="text-5xl sm:text-6xl md:text-8xl font-black tracking-tighter uppercase leading-none mb-12">
+            Proof of <br/>
+            My Work<span class="text-brand-purple ml-2">></span>
+        </h1>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-col sm:flex-row items-center gap-6 w-full sm:w-auto mt-4">
+            
+            <!-- Learnings Button (Solid) -->
+            <a href="LEARNINGS\learnings_section.html" 
+               class="group flex items-center justify-between w-full sm:w-72 px-8 py-5 bg-brand-black text-brand-white font-bold text-sm tracking-widest uppercase transition-all duration-300 hover:bg-brand-purple">
+                <span>Learnings</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform group-hover:translate-x-2 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                    <path stroke-linecap="square" stroke-linejoin="miter" d="M9 5l7 7-7 7" />
+                </svg>
+            </a>
+
+            <!-- Hands On Project Button (Outline) -->
+            <a href="https://github.com/KirtiTung/ServiceNow-Codex/tree/main" 
+               class="group flex items-center justify-between w-full sm:w-72 px-8 py-5 border-2 border-brand-black bg-brand-white text-brand-black font-bold text-sm tracking-widest uppercase transition-all duration-300 hover:border-brand-purple hover:text-brand-purple">
+                <span>Git Hub</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform group-hover:translate-x-2 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                    <path stroke-linecap="square" stroke-linejoin="miter" d="M9 5l7 7-7 7" />
+                </svg>
+            </a>
+
+        </div>
+    </main>
+
+    <!-- Decorative background accent -->
+    <div class="fixed bottom-0 right-0 w-[40vw] h-[40vw] bg-brand-gray rounded-tl-full -z-10 opacity-50 transform translate-x-1/4 translate-y-1/4 pointer-events-none"></div>
+</body>
+</html>
